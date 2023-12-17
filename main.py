@@ -35,7 +35,7 @@ def main():
         WIN.blit(button_text, (960, 60))
 
         input_box = pygame.Rect(950, 150, 140, 32)
-        color_inactive = pygame.Color('lightskyblue3')
+        
 
         pygame.display.update()
 
