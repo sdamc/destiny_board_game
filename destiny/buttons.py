@@ -1,8 +1,9 @@
 import pygame
 import sys
+from .constants import*
 
 def get_user_input(prompt, default_value=""):
-    input_box = pygame.Rect(200, 100, 140, 32)
+    input_box = pygame.Rect(950, 150, 140, 32)
     color_inactive = pygame.Color('lightskyblue3')
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
@@ -11,7 +12,7 @@ def get_user_input(prompt, default_value=""):
     input_active = True
 
     # Label above the input box
-    label_text = label_font.render(prompt, True, BLACK)
+    label_text = LABEL_FONT.render(prompt, True, BLACK)
 
     while input_active:
         for event in pygame.event.get():
@@ -33,17 +34,10 @@ def get_user_input(prompt, default_value=""):
                     else:
                         text += event.unicode
 
-        window.fill(RED)
         
-        window.blit(label_text, (200, 70))
-
         txt_surface = FONT.render(text, True, color)
         width = max(200, txt_surface.get_width()+10)
-        input_box.w = width
-        window.blit(txt_surface, (input_box.x+5, input_box.y+5))
-        pygame.draw.rect(window, color, input_box, 2)
-
-        pygame.display.flip()
+        input_box.w = width        
         
 
     return text

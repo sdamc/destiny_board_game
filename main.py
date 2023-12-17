@@ -15,22 +15,29 @@ def main():
 
     while run:
         clock.tick(FPS)
-        pass
+        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+                if 950 <= event.pos[0] <= 1050 and 50 <= event.pos[1] <= 100:
+                    unit_name = get_user_input("Enter Unit Name:")
+                    print("Unit Name:", unit_name)
     
         board.draw_squares(WIN)
-        pygame.display.update()
+        
 
         # Draw the add unit button to the right
-        pygame.draw.rect(WIN, BUTTON_COLOR, (450, 50, 100, 50))
+        pygame.draw.rect(WIN, BUTTON_COLOR, (950, 50, 100, 50))
         button_text = FONT.render("Add Unit", True, BLACK)
-        WIN.blit(button_text, (460, 60))
+        WIN.blit(button_text, (960, 60))
+
+        input_box = pygame.Rect(950, 150, 140, 32)
+        color_inactive = pygame.Color('lightskyblue3')
+
+        pygame.display.update()
 
 
     pygame.quit()
