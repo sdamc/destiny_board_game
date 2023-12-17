@@ -1,7 +1,9 @@
+# main.py
 import pygame
-from destiny.constants import*
-from destiny.board import*
-from destiny.buttons import*
+from destiny.constants import *
+from destiny.board import *
+from destiny.buttons import *
+from destiny.units import create_unit
 
 FPS = 60
 
@@ -12,10 +14,12 @@ def main():
     run = True
     clock = pygame.time.Clock()
     board = Board()
+    
+    capturing_input = False  # Flag to control when to capture input
+    unit_stats = None  # Initialize unit_stats
 
     while run:
         clock.tick(FPS)
-        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -23,22 +27,28 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 950 <= event.pos[0] <= 1050 and 50 <= event.pos[1] <= 100:
-                    unit_name = get_user_input("Enter Unit Name:")
-                    print("Unit Name:", unit_name)
-    
+                    capturing_input = True  # Set the flag to start capturing input
+
+        if capturing_input:
+            unit_stats = get_stats_input(["Name:", "Strength:", "Agility:", "HP:", "Field Position:"], WIN)
+            print("Input Stats:", unit_stats)
+            
+            # Check if unit_stats is not None before attempting to create a unit
+            if unit_stats is not None:
+                unit = create_unit(unit_stats)
+                if unit is not None:
+                    print("Created Unit:", unit.__dict__)
+            
+            capturing_input = False  # Reset the flag after capturing input
+
         board.draw_squares(WIN)
-        
 
         # Draw the add unit button to the right
         pygame.draw.rect(WIN, BUTTON_COLOR, (950, 50, 100, 50))
         button_text = FONT.render("Add Unit", True, BLACK)
         WIN.blit(button_text, (960, 60))
 
-        input_box = pygame.Rect(950, 150, 140, 32)
-        
-
         pygame.display.update()
-
 
     pygame.quit()
 
